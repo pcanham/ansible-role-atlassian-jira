@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  role_name: atlassian-jira
+  author: Paul Canham
+  description: An Ansible role to install and configuring Atlassian Jira
+  license: BSD
+  min_ansible_version: 2.2
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Amazon
+      versions:
+        - 2
+  galaxy_tags: ['atlassian', 'jira']
+
+dependencies: [ 'lean_delivery.java']

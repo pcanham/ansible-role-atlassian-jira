@@ -1,0 +1,22 @@
+---
+- name: create directories for jira
+  file:
+    path: "{{ item.directory }}"
+    state: directory
+    owner: "{{ jira_app_username }}"
+    group: "{{ jira_app_group }}"
+    mode: 0755
+  with_items:
+    - { directory: "/app/atlassian" }
+    - { directory: "{{ jira_home }}" }
+    - { directory: "/app/src" }
+- name: download mysql connector
+  get_url:
+    url: "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-{{ mysql_connector_version }}.tar.gz"
+    dest: /app/src/mysql-connector-java-{{ mysql_connector_version }}.tar.gz
+    timeout: 30
+- name: download atlassian jira
+  get_url:
+    url: "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-{{ jira_version }}.tar.gz"
+    dest: /app/src/atlassian-jira.tar.gz
+    timeout: 30

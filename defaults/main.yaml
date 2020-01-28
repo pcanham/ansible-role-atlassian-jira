@@ -1,0 +1,6 @@
+jira_app_username: jira
+jira_app_group: jira
+jira_app_jvm_min_memory: 4096m
+jira_app_jvm_max_memory: 4096m
+jira_path: /app/atlassian/atlassian-jira
+jira_home: /app/atlassian/jirahome

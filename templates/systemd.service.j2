@@ -1,0 +1,16 @@
+[Unit]
+Description=JIRA Service
+After=network.target iptables.service firewalld.service
+
+[Service]
+Type=forking
+User={{ jira_app_username }}
+Group={{ jira_app_group }}
+Environment=JRE_HOME={{ java_path }}/{{ java_folder }}
+Environment=JIRA_HOME={{ jira_home }}
+PIDFile={{ jira_path }}/work/catalina.pid
+ExecStart={{ jira_path }}/bin/start-jira.sh
+ExecStop={{ jira_path }}/bin/stop-jira.sh
+
+[Install]
+WantedBy=multi-user.target

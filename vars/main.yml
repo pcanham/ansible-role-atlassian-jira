@@ -1,0 +1,5 @@
+# vim: sw=2 ts=2 et :
+---
+mysql_connector_version: 5.1.46
+jira_version: 8.5.3
+

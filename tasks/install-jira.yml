@@ -1,0 +1,25 @@
+---
+- name: Extract Atlassian Jira
+  unarchive:
+    src: "/app/src/atlassian-jira.tar.gz"
+    dest: "/app/atlassian/"
+    owner: "{{ jira_app_username }}"
+    group: "{{ jira_app_group }}"
+- name: Create Symlink for Jira
+  file:
+    src: "/app/atlassian/atlassian-jira-software-{{ jira_version }}-standalone"
+    dest: "{{ jira_path }}"
+    state: link
+- name: Extract MySQL Connector J
+  unarchive:
+    src: "/app/src/mysql-connector-java-{{ mysql_connector_version }}.tar.gz"
+    dest: "/app/src/"
+    owner: "{{ jira_app_username }}"
+    group: "{{ jira_app_group }}"
+- name: Copy MySQL Library into Atlassian install
+  copy:
+    src: "/app/src/mysql-connector-java-{{ mysql_connector_version }}/mysql-connector-java-{{ mysql_connector_version }}-bin.jar"
+    dest: "{{ jira_path }}/lib/"
+    owner: "{{ jira_app_username }}"
+    group: "{{ jira_app_group }}"
+    mode: 0644

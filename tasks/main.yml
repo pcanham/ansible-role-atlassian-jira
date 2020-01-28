@@ -1,0 +1,16 @@
+---
+- name: include variable overrides
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "vars/{{ ansible_distribution }}.yml"
+        - "vars/{{ ansible_os_family }}.yml"
+        - "vars/main.yml"
+  tags:
+    - atlassian-jira
+- include_tasks: config-jira.yml
+- include_tasks: app-user.yml
+- include_tasks: fetch-source.yml
+- include_tasks: install-jira.yml
+- include_tasks: systemd-setup.yml

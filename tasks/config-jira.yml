@@ -1,0 +1,21 @@
+---
+- name: Set Jira home
+  lineinfile: >
+    dest=/app/atlassian/atlassian-jira-software-{{ jira_version }}-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties
+    regexp='^jira.home ='
+    line='jira.home = {{ jira_home }}'
+- name: Set Jira user
+  lineinfile: >
+    dest=/app/atlassian/atlassian-jira-software-{{ jira_version }}-standalone/bin/user.sh
+    regexp='^JIRA_USER="" ##'
+    line='JIRA_USER="{{ jira_app_username }}" ##'
+- name: Set Jira Minimum Memory
+  lineinfile: >
+    dest=/app/atlassian/atlassian-jira-software-{{ jira_version }}-standalone/bin/setenv.sh
+    regexp='^JVM_MINIMUM_MEMORY="(\\d+)m"$'
+    line='JVM_MINIMUM_MEMORY="{{ jira_app_jvm_min_memory }}"'
+- name: Set Jira Maximum Memory
+  lineinfile: >
+    dest=/app/atlassian/atlassian-jira-software-{{ jira_version }}-standalone/bin/setenv.sh
+    regexp='^JVM_MAXIMUM_MEMORY="(\\d+)m"$'
+    line='JVM_MAXIMUM_MEMORY="{{ jira_app_jvm_max_memory }}"'

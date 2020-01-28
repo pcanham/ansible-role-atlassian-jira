@@ -1,0 +1,40 @@
+---
+- name: Install Jira systemd config
+  template:
+    remote_src: no
+    src: templates/systemd.service.j2
+    dest: /etc/systemd/system/jira.service
+    owner: root
+    group: root
+    mode: 0644
+  tags: jira
+  when: ansible_service_mgr == "systemd"
+- name: create jira systemd service directory
+  file:
+    path: "/etc/systemd/system/jira.service.d"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  tags: jira
+  when: ansible_service_mgr == "systemd"
+- name: Install Jira systemd override Config
+  copy:
+    remote_src: no
+    src: files/systemd-override.conf
+    dest: /etc/systemd/system/jira.service.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags: jira
+  when: ansible_service_mgr == "systemd"
+- name: Force systemd to reread configs
+  systemd: daemon_reload=yes
+  tags: jira
+- name: enable service jira and ensure it is not masked
+  systemd:
+    name: jira
+    enabled: no
+    masked: no
+  tags: jira
+  when: ansible_service_mgr == "systemd"

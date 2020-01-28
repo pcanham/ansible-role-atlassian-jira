@@ -1,0 +1,17 @@
+---
+- name: "Create Application Group"
+  become: yes
+  group:
+    name={{ jira_app_group }}
+    state=present
+  when: ansible_system == 'Linux'
+- name: "Create Application Account"
+  become: yes
+  user:
+    name={{ jira_app_username }}
+    comment="Jira Application Service Account"
+    group={{ jira_app_group }}
+    create_home=no
+    home=/app/atlassian
+    state=present
+  when: ansible_system == 'Linux'
